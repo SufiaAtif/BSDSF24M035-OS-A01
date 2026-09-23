@@ -16,7 +16,10 @@ MAIN_OBJ = $(MAIN_SRC:.c=.o)
 TARGET_STATIC = ../bin/client_static
 TARGET_DYNAMIC = ../bin/client_dynamic
 
-.PHONY: all clean
+INSTALL_DIR = /usr/local/bin
+MAN_DIR = /usr/local/share/man/man3
+
+.PHONY: all clean install
 
 all: $(TARGET_STATIC) $(TARGET_DYNAMIC)
 
@@ -37,3 +40,9 @@ $(LIBRARY_DYNAMIC): $(LIB_OBJ)
 
 clean:
 	rm -f $(LIB_OBJ) $(MAIN_OBJ) $(LIBRARY_STATIC) $(LIBRARY_DYNAMIC) $(TARGET_STATIC) $(TARGET_DYNAMIC)
+
+install: $(TARGET_STATIC)
+	mkdir -p $(INSTALL_DIR)
+	mkdir -p $(MAN_DIR)
+	cp $(TARGET_STATIC) $(INSTALL_DIR)/client
+	cp ../man/man3/*.1 $(MAN_DIR)/
